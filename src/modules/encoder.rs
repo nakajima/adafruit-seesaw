@@ -1,5 +1,5 @@
 use super::{
-    gpio::{GpioModule, PinMode},
+    gpio::{GpioModule, PinMode, INT_ENABLE},
     Modules, Reg,
 };
 use crate::{Driver, DriverExt, SeesawError};
@@ -39,6 +39,12 @@ pub trait EncoderModule<D: Driver>: GpioModule<D> {
 
     fn enable_interrupt(&mut self) -> Result<(), SeesawError<D::Error>> {
         let addr = self.addr();
+
+        // I think we need to INT_ENABLE for the GPIO as well?
+        self.driver()
+            .write_u8(addr, INT_ENABLE, 1)
+            .map_err(SeesawError::I2c)?;
+
         self.driver()
             .write_u8(addr, INT_SET, 1)
             .map_err(SeesawError::I2c)

@@ -40,7 +40,7 @@ const TOGGLE: &Reg = &[Modules::Gpio.into_u8(), 0x07];
 /// corresponding pin. When the value on this pin changes, the corresponding
 /// bit will be set in the INTFLAG register. Writing 0 has no effect.
 #[allow(dead_code)]
-const INT_ENABLE: &Reg = &[Modules::Gpio.into_u8(), 0x08];
+pub const INT_ENABLE: &Reg = &[Modules::Gpio.into_u8(), 0x08];
 
 /// WO - 32 bits
 /// Writing a 1 to any bit in this register disables the interrupt on the
